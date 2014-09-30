@@ -8,6 +8,5 @@ span.user_name {color: #f00; }
 .onlineUsersList p {margin: 0; }
 .chat_header{position: absolute;top: 0;width: 100%;}
 .chat_body{margin-top:40px; }
-
 .form .col-md-12{text-align: center;}
 .form .col-md-12 form{float: none;display: inline-block;padding-top: 150px;}
