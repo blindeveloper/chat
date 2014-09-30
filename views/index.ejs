@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>chat</title>
+    <link rel='stylesheet' href='/css/bootstrap.min.css'/>
+    <link rel='stylesheet' href='/css/style.css'/>
+  </head>
+  <body>
+  	<div class="row form">
+  		<div class="col-md-12">
+  			<form role="form" id="form" class="col-md-2" method="POST">
+				<div class="form-group">
+					<input type="text" class="form-control" id="name" placeholder="name" autofocus>
+				</div>
+				
+				<div class="form-group">
+					<select class="form-control" type="color" id="color">
+						<option>green</option>
+						<option>yellow</option>
+						<option>blue</option>
+						<option>white</option>
+						<option>red</option>
+					</select>
+				</div>
+
+				<button id="createUser" type="button" class="btn btn-primary">Create gamer</button>
+			</form>
+  		</div>
+  	</div>
+  	
+
+	<div class='container chat'>
+		<div class="row chat_header">
+			<div class='col-md-10'>
+				<form action="">
+					<input id="m" type="text" class="form-control" outocomplete="off" autofocus placeholder="write a message here...">
+				</form>
+			</div>
+
+			<div class="onlineUsersList col-md-2">
+				<p>Users online:</p>
+				<div id="onlineUsers"></div>
+			</div>
+		</div>
+
+		<div class="row chat_body">
+			<ul class="col-md-12" id="messages"></ul>
+		</div>
+				
+			
+		
+	</div>
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script src="/js/socket.io-1.1.0.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
