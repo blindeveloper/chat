@@ -2,26 +2,30 @@ addChatClientLogic = function () {
 	var socket = io();
 	var userName;
 	var newUserInfo = {};
+	var userData = {};
 	var onlineUsers = [];
 	var date, time, hours, minutes, seconds;
 
 	$('.chat').hide();
 
 	$('#createUser').click(function(){
-		$('.form').hide();
-		$('.chat').show();
+		
 
-			var pathToForm = document.forms["form"];
+			var pathToForm = document.forms.form;
 		    newUserInfo = {
-			    name: pathToForm.elements["name"].value,
-			    color: pathToForm.elements["color"].value,
+			    name: pathToForm.elements.name.value,
+			    color: pathToForm.elements.color.value,
 		    }
 		    userName = newUserInfo.name;
-		    console.log(newUserInfo);
-		    socket.emit('user login', newUserInfo);
+		    if ( userName.length !== 0 ) {
+		    	$('.form').hide();
+				$('.chat').show();
+				socket.emit('user login', newUserInfo);
+		    } else {
+		    	return;
+		    }
+		    
 	});
-
-	
 
 	socket.on('user login', function(serverName, serverNameColor, serverOnlineUsers) {
 
@@ -31,17 +35,24 @@ addChatClientLogic = function () {
 		for ( var i = 0; i < serverOnlineUsers.length; i++ ) {
 			$('#onlineUsers').prepend('<p>' + serverOnlineUsers[i] + '</p>');
 		}
-		console.log(serverOnlineUsers);
 	});
 
 	$('form').submit(function(){
-		var date = new Date();
+		date = new Date();
 		hours = (date.getHours() < 10 ? '0' : '' ) + date.getHours();
 		minutes = (date.getMinutes() < 10 ? '0' : '' ) + date.getMinutes();
 		seconds = (date.getSeconds() < 10 ? '0' : '' ) + date.getSeconds();
 		time = [hours, minutes, seconds];
 
-		socket.emit('chat message', $('#m').val(), time);
+		userData.time = time;
+		userData.name = userName;
+		userData.color = newUserInfo.color;
+		userData.massage = $('#m').val();
+
+		console.log("userData: " + typeof(userData), userData )
+
+		socket.emit('chat message', $('#m').val(), time, userData);
+		userData = {};
 		$('#m').val('');
 		return false;
 	});
@@ -54,13 +65,51 @@ addChatClientLogic = function () {
 		$('#messages').prepend($('<p class="server_massage">').text(msg + ' disconected'));
 		$('#onlineUsers').empty();
 
-		console.log(serverOnlineUsers);
-
 		for ( var i = 0; i < serverOnlineUsers.length; i++ ) {
 			$('#onlineUsers').prepend('<p>' + serverOnlineUsers[i] + '</p>');
 		}
 	});
 
+	socket.on('drawHistory', function(history){
+		var newHistory = jQuery.parseJSON(history);
+		console.log(newHistory);
+		for ( p in  newHistory) {
+			$('#messages').prepend('<li lass="chat_massage">' + newHistory[p].time[0] + ":" + newHistory[p].time[1] + ":" + newHistory[p].time[2] + " " + '<span class="user_name" style="color:' + newHistory[p].color + '">' + newHistory[p].name + '</span>' + ": " + newHistory[p].massage + '</li>');
+		}
+		
+	});
+
 }
 
 addChatClientLogic();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

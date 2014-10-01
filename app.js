@@ -4,9 +4,12 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var history = require('./data/history');
+var pathToHistory = __dirname + '/data/history.json';
 
 var app = express();
 var debug = require('debug')('chat');
@@ -65,6 +68,10 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
+function getHistory(){
+  return fs.readFileSync(pathToHistory,'utf8');
+}
+
 //socket.io
 
 var io = require('socket.io')(server);
@@ -77,8 +84,9 @@ io.on('connection', function(socket){
   var serverName;
   var serverNameColor;
 
+  io.emit('drawHistory', getHistory());
+
   socket.on('user login', function(newUserInfo) {
-    console.log(newUserInfo);
     serverName = newUserInfo.name;
     serverNameColor = newUserInfo.color;
     serverOnlineUsers.push(serverName);
@@ -100,11 +108,24 @@ io.on('connection', function(socket){
 
   });
 
-  socket.on('chat message', function(msg, time){
+  socket.on('chat message', function(msg, time, userData){
+
+    
+    var oldHistory = JSON.parse(getHistory());
+    var freshHistory = oldHistory.concat(userData);
+
+    // console.log("freshHistory: " + freshHistory);
+
+    fs.writeFile(pathToHistory, JSON.stringify(freshHistory,0 , 4), function(err) {
+      if (err) { throw err };
+    });
+
     io.emit('chat message', serverName, serverNameColor, time, msg);
   });
 
 });
+
+
 
 
 
