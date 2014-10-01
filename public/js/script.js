@@ -36,7 +36,7 @@ addChatClientLogic = function () {
 
 	$('form').submit(function(){
 		var date = new Date();
-		hours = date.getHours();
+		hours = (date.getHours() < 10 ? '0' : '' ) + date.getHours();
 		minutes = (date.getMinutes() < 10 ? '0' : '' ) + date.getMinutes();
 		seconds = (date.getSeconds() < 10 ? '0' : '' ) + date.getSeconds();
 		time = [hours, minutes, seconds];
