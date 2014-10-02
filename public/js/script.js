@@ -9,22 +9,19 @@ addChatClientLogic = function () {
 	$('.chat').hide();
 
 	$('#createUser').click(function(){
-		
-
-			var pathToForm = document.forms.form;
-		    newUserInfo = {
-			    name: pathToForm.elements.name.value,
-			    color: pathToForm.elements.color.value,
-		    }
-		    userName = newUserInfo.name;
-		    if ( userName.length !== 0 ) {
-		    	$('.form').hide();
-				$('.chat').show();
-				socket.emit('user login', newUserInfo);
-		    } else {
-		    	return;
-		    }
-		    
+		var pathToForm = document.forms.form;
+	    newUserInfo = {
+		    name: pathToForm.elements.name.value,
+		    color: pathToForm.elements.color.value,
+	    }
+	    userName = newUserInfo.name;
+	    if ( userName.length !== 0 ) {
+	    	$('.form').hide();
+			$('.chat').show();
+			socket.emit('user login', newUserInfo);
+	    } else {
+	    	return;
+	    } 
 	});
 
 	socket.on('user login', function(serverName, serverNameColor, serverOnlineUsers) {

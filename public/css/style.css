@@ -1,13 +1,12 @@
 body{padding-top: 20px;}
 .chat{position: relative;}
 .chat form{width: 100%;margin: 0;}
-#messages {list-style-type: none; max-height: 100%;}
+#messages {list-style-type: none; max-height: 100%;padding: 0;}
 #messages p {color: #008000; font-size: 14px; margin: 0;}
 span.user_name {color: #f00; }
 #onlineUsers p {margin: 0; font-size: 14px; }
 .onlineUsersList {height: 100%; display: inline-block; background: rgba(0,128,0,0.09); padding: 5px; text-align: right; }
 .onlineUsersList p {margin: 0; }
-.chat_header{position: absolute;top: 0;width: 100%;}
 .chat_body{margin-top:40px; }
 .form .col-md-12{text-align: center;}
 .form .col-md-12 form{float: none;display: inline-block;padding-top: 150px;}
