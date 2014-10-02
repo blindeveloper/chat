@@ -1,6 +1,7 @@
 body{padding-top: 20px;}
 .chat{position: relative;}
 .chat form{width: 100%;margin: 0;}
+.chat_logo{margin-left: -70px;}
 #messages {list-style-type: none; max-height: 100%;padding: 0;}
 #messages p {color: #008000; font-size: 14px; margin: 0;}
 span.user_name {color: #f00; }
