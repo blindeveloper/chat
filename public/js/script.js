@@ -6,7 +6,7 @@ addChatClientLogic = function () {
 	var onlineUsers = [];
 	var date, time, hours, minutes, seconds;
 
-	$('.chat').hide();
+	// $('.chat').hide();
 
 	$('#createUser').click(function(){
 		var pathToForm = document.forms.form;
@@ -55,7 +55,7 @@ addChatClientLogic = function () {
 	});
 
 	socket.on('chat message', function(serverName, serverNameColor, time, msg){
-		$('#messages').prepend('<li lass="chat_massage">' + time[0] + ":" + time[1] + ":" + time[2] + " " + '<span class="user_name" style="color:' + serverNameColor + '">' + serverName + '</span>' + ": " + msg + '</li>');
+		$('#messages').prepend('<li lass="chat_massage">[' + time[0] + ":" + time[1] + ":" + time[2] + "] " + '<span class="user_name" style="color:' + serverNameColor + '">' + serverName + '</span>' + ": " + msg + '</li>');
 	});
 
 	socket.on('disconnect', function(msg, serverOnlineUsers){
