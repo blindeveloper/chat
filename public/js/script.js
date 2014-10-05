@@ -6,6 +6,10 @@ addChatClientLogic = function () {
 	var onlineUsers = [];
 	var date, time, hours, minutes, seconds;
 
+	var htmlHeight = $('html').height();
+	$('#messages').css('max-height', htmlHeight - 80);
+
+
 	// $('.chat').hide();
 
 	$('#createUser').click(function(){
@@ -18,11 +22,17 @@ addChatClientLogic = function () {
 	    if ( userName.length !== 0 ) {
 	    	$('.form').hide();
 			$('.chat').show();
+			$('#m').focus();
 			socket.emit('user login', newUserInfo);
 	    } else {
 	    	return;
 	    } 
 	});
+
+	function makeSound(noice) {
+		var sound = document.getElementById(noice);
+		sound.play();
+	}
 
 	socket.on('user login', function(serverName, serverNameColor, serverOnlineUsers) {
 
@@ -55,6 +65,7 @@ addChatClientLogic = function () {
 	});
 
 	socket.on('chat message', function(serverName, serverNameColor, time, msg){
+		makeSound('audio1');
 		$('#messages').prepend('<li lass="chat_massage">[' + time[0] + ":" + time[1] + ":" + time[2] + "] " + '<span class="user_name" style="color:' + serverNameColor + '">' + serverName + '</span>' + ": " + msg + '</li>');
 	});
 
