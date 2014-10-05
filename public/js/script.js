@@ -61,7 +61,7 @@ addChatClientLogic = function () {
 		userData.color = newUserInfo.color;
 		userData.massage = $('#m').val();
 
-		if ( userData.massage.search('<script>') || userData.massage.search('<style>') || userData.massage.search('applet') >= 0) {
+		if ( userData.massage.search('<script>') >= 0 || userData.massage.search('<style>') >= 0 || userData.massage.search('applet') >= 0) {
 			alert('you banned :)');
 			return;
 		} else {
