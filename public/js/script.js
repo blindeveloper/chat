@@ -7,7 +7,12 @@ addChatClientLogic = function () {
 	var date, time, hours, minutes, seconds;
 
 	var htmlHeight = $('html').height();
+	var htmlWidth = $('html').width();
+	var formHeight = $('#form').height();
+	var formWidth = $('#form').width();
+
 	$('#messages').css('max-height', htmlHeight - 80);
+	$('#form').css({'top':htmlHeight/2-formHeight/1.4, 'left':htmlWidth/2-formWidth/2});
 
 
 	// $('.chat').hide();
@@ -56,12 +61,15 @@ addChatClientLogic = function () {
 		userData.color = newUserInfo.color;
 		userData.massage = $('#m').val();
 
-		console.log("userData: " + typeof(userData), userData )
-
-		socket.emit('chat message', $('#m').val(), time, userData);
-		userData = {};
-		$('#m').val('');
-		return false;
+		if ( userData.massage.search('<script>') || userData.massage.search('<style>') || userData.massage.search('applet') >= 0) {
+			alert('you banned :)');
+			return;
+		} else {
+			socket.emit('chat message', $('#m').val(), time, userData);
+			userData = {};
+			$('#m').val('');
+			return false;
+		}
 	});
 
 	socket.on('chat message', function(serverName, serverNameColor, time, msg){
@@ -90,30 +98,6 @@ addChatClientLogic = function () {
 }
 
 addChatClientLogic();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

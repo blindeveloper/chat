@@ -12,6 +12,6 @@ span.user_name {color: #f00; }
 .onlineUsersList p {margin: 0; }
 .chat_body{margin-top:40px; }
 .form .col-md-12{text-align: center;}
-.form .col-md-12 form{float: none;display: inline-block;padding-top: 150px;}
+.form .col-md-12 form{position: absolute;}
 .dashed{border: 1px dashed #444;}
 .input_massage input{background-color:rgba(255, 0, 31, 0.02);}
