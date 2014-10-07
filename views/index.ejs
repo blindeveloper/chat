@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
+  	<meta charset="UTF-8">
     <title>chat</title>
-    <link rel='stylesheet' href='/css/bootstrap.min.css'/>
-    <link rel='stylesheet' href='/css/style.css'/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel='stylesheet' href='/css/style.css'/>  
   </head>
-  <body>
-  	<div class="row form">
-  		<div class="col-md-12">
-  			<form role="form" id="form" class="col-md-2" method="POST">
+  <body ng-app>
+  	<div class="row form_wrapper animate-show" ng-hide="showme">
+  		<div class="col-md-12 form_col">
+  			<form role="form" id="form" class="col-md-2 form" method="POST">
   				<img src="/img/chat_logo.png" alt="chat" class="chat_logo">
 				<div class="form-group">
 					<input type="text" class="form-control dashed" id="name" placeholder="name" autofocus>
@@ -23,13 +25,12 @@
 					</select>
 				</div>
 
-				<button id="createUser" type="button" class="btn btn-primary">Enter chat</button>
+				<button id="createUser" type="button" class="btn btn-primary" ng-click="showme=true">Enter chat</button>
 			</form>
   		</div>
   	</div>
-  	
 
-	<div class='container chat'>
+	<div class='container chat animate-show' ng-show="showme">
 		<div class="row chat_header">
 			<div class='col-md-10'>
 				<form action="" class="input_massage">
@@ -45,10 +46,15 @@
 				
 			</div>
 		</div>
-	<audio id="audio1" src="/sound/incoming.wav" preload="auto" autobuffer></audio>
+		<audio id="audio1" src="/sound/incoming.wav" preload="auto" autobuffer></audio>
 	</div>
-    <script src="/js/jquery-1.11.1.min.js"></script>
+
+	<script src="/bower_components/jquery/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js/socket.io-1.1.0.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular-animate.js"></script>
 	<script src="/js/script.js"></script>
   </body>
 </html>

@@ -8,14 +8,8 @@ addChatClientLogic = function () {
 
 	var htmlHeight = $('html').height();
 	var htmlWidth = $('html').width();
-	var formHeight = $('#form').height();
-	var formWidth = $('#form').width();
 
 	$('#messages').css('max-height', htmlHeight - 80);
-	$('#form').css({'top':htmlHeight/2-formHeight/1.4, 'left':htmlWidth/2-formWidth/2});
-
-
-	// $('.chat').hide();
 
 	$('#createUser').click(function(){
 		var pathToForm = document.forms.form;
@@ -25,8 +19,6 @@ addChatClientLogic = function () {
 	    }
 	    userName = newUserInfo.name;
 	    if ( userName.length !== 0 ) {
-	    	$('.form').hide();
-			$('.chat').show();
 			$('#m').focus();
 			socket.emit('user login', newUserInfo);
 	    } else {
@@ -98,6 +90,8 @@ addChatClientLogic = function () {
 }
 
 addChatClientLogic();
+
+// var app = angular.module('myApp', []);
 
 
 
