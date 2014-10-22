@@ -8,8 +8,8 @@ var fs = require('fs');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var history = require('./data/history');
-var pathToHistory = __dirname + '/data/history.json';
+var history = require('./app/data/history');
+var pathToHistory = __dirname + '/app/data/history.json';
 
 var app = express();
 var debug = require('debug')('chat');
@@ -22,7 +22,7 @@ var server = app.listen(app.get('port'), function() {
 
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'app'));
 app.set('view engine', 'ejs');
 
 app.use(favicon());
@@ -30,7 +30,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'app')));
 
 app.use('/', routes);
 app.use('/users', users);
@@ -76,6 +76,7 @@ function getHistory(){
 
 var io = require('socket.io')(server);
 var serverOnlineUsers = [];
+var prohibited = ['<script>', '<style>', 'applet'];
 
 var urlList = [];
 var audioCounter = 0;
@@ -110,18 +111,37 @@ io.on('connection', function(socket){
 
   socket.on('chat message', function(msg, time, userData){
 
-    
     var oldHistory = JSON.parse(getHistory());
     var freshHistory = oldHistory.concat(userData);
-
-    // console.log("freshHistory: " + freshHistory);
 
     fs.writeFile(pathToHistory, JSON.stringify(freshHistory,0 , 4), function(err) {
       if (err) { throw err };
     });
 
     io.emit('chat message', serverName, serverNameColor, time, msg);
+
+
+
   });
+
+  // socket.on('chat message', function(msg, time, userData){
+  //   for ( gg in userData ) {
+  //     for ( var i = 0; i < prohibited.length; i++) {
+  //       if ( userData[gg].toString().search(prohibited[i]) >= 0  ) {
+  //         console.log('chiter!');
+  //       } else {
+  //         var oldHistory = JSON.parse(getHistory());
+  //         var freshHistory = oldHistory.concat(userData);
+
+  //         fs.writeFile(pathToHistory, JSON.stringify(freshHistory,0 , 4), function(err) {
+  //           if (err) { throw err };
+  //         });
+
+  //         io.emit('chat message', serverName, serverNameColor, time, msg);
+  //       }
+  //     }
+  //   }
+  // });
 
 });
 

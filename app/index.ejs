@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel='stylesheet' href='/css/style.css'/>  
   </head>
-  <body ng-app>
-  	<div class="row form_wrapper animate-show" ng-hide="showme">
+  <body>
+  	<div class="row form_wrapper">
   		<div class="col-md-12 form_col">
   			<form role="form" id="form" class="col-md-2 form" method="POST">
   				<img src="/img/chat_logo.png" alt="chat" class="chat_logo">
@@ -25,12 +25,12 @@
 					</select>
 				</div>
 
-				<button id="createUser" type="button" class="btn btn-primary" ng-click="showme=true">Enter chat</button>
+				<button id="createUser" type="button" class="btn btn-primary">Enter chat</button>
 			</form>
   		</div>
   	</div>
 
-	<div class='container chat animate-show' ng-show="showme">
+	<div class='container chat'>
 		<div class="row chat_header">
 			<div class='col-md-10'>
 				<form action="" class="input_massage">
@@ -51,10 +51,9 @@
 
 	<script src="/bower_components/jquery/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/js/socket.io-1.1.0.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-route/angular-route.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular-animate.js"></script>
 	<script src="/js/script.js"></script>
   </body>
 </html>

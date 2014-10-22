@@ -1,4 +1,4 @@
-addChatClientLogic = function () {
+(function(){
 	var socket = io();
 	var userName;
 	var newUserInfo = {};
@@ -19,12 +19,18 @@ addChatClientLogic = function () {
 	    }
 	    userName = newUserInfo.name;
 	    if ( userName.length !== 0 ) {
+	    	showHide();
 			$('#m').focus();
 			socket.emit('user login', newUserInfo);
 	    } else {
 	    	return;
 	    } 
 	});
+
+	function showHide(){
+		$('.form_wrapper').hide();
+		$('.chat').show();
+	}
 
 	function makeSound(noice) {
 		var sound = document.getElementById(noice);
@@ -53,15 +59,10 @@ addChatClientLogic = function () {
 		userData.color = newUserInfo.color;
 		userData.massage = $('#m').val();
 
-		if ( userData.massage.search('<script>') >= 0 || userData.massage.search('<style>') >= 0 || userData.massage.search('applet') >= 0) {
-			alert('you banned :)');
-			return;
-		} else {
-			socket.emit('chat message', $('#m').val(), time, userData);
-			userData = {};
-			$('#m').val('');
-			return false;
-		}
+		socket.emit('chat message', $('#m').val(), time, userData);
+		userData = {};
+		$('#m').val('');
+		return false;
 	});
 
 	socket.on('chat message', function(serverName, serverNameColor, time, msg){
@@ -80,19 +81,28 @@ addChatClientLogic = function () {
 
 	socket.on('drawHistory', function(history){
 		var newHistory = jQuery.parseJSON(history);
-		console.log(newHistory);
 		for ( p in  newHistory) {
-			$('#messages').prepend('<li lass="chat_massage">' + newHistory[p].time[0] + ":" + newHistory[p].time[1] + ":" + newHistory[p].time[2] + " " + '<span class="user_name" style="color:' + newHistory[p].color + '">' + newHistory[p].name + '</span>' + ": " + newHistory[p].massage + '</li>');
+			$('#messages').prepend('<li lass="chat_massage">[' + newHistory[p].time[0] + ":" + newHistory[p].time[1] + ":" + newHistory[p].time[2] + "] " + '<span class="user_name" style="color:' + newHistory[p].color + '">' + newHistory[p].name + '</span>' + ": " + newHistory[p].massage + '</li>');
 		}
-		
 	});
 
-}
+})();
 
 addChatClientLogic();
 
-// var app = angular.module('myApp', []);
+// (function() {
 
+// 	var chatApp = angular.module('chatApp', []);
+
+// 	chatApp.controller('chatLogic', function($scope, $http) {
+// 		$http.get('/data/history.json').success(function(data){
+// 			$scope.history = data;
+//     		// console.log($scope.history);
+// 		});
+// 	});
+
+	
+// })();
 
 
 
